@@ -2,7 +2,8 @@ html, body {
   height:100%;
   margin:0;
   color:white;
-  -webkit-transition:background-color 0.75s ease-in-out;
+  background-color: #fff;
+  /*-webkit-transition:background-color 0.75s ease-in-out;*/
 }
 
 body {
@@ -25,17 +26,19 @@ h1, h2, h4 {
   position:fixed;
   top:0;
   left:0;
-  -webkit-transition:-webkit-transform 0.75s cubic-bezier(0, 0, .06, 1);
+  /*-webkit-transition:-webkit-transform 0.75s cubic-bezier(0, 0, .06, 1);*/
+  -webkit-transition: -webkit-transform 750ms;
+  -webkit-transform: translate3d(0px, 0px, 0px);
   height:100%;
   width:100%;
 }
 
 #motion.prologue {
-  -webkit-transform:translateY(-100%);
+  -webkit-transform:translate3d(0px, -100%, 0px);
 }
 
 #motion.songs {
-  -webkit-transform:translateY(-200%);
+  -webkit-transform:translate3d(0px, -200%, 0px);
 }
 
 #cover {

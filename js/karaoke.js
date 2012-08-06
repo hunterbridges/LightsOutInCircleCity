@@ -57,6 +57,10 @@ var lyrics = lyrics;
       var $lastWord = null;
       var $currentWord = $('#T'+trackClicked+' span.'+(wordIndex)+'');
       $(audio).bind('timeupdate', function() {
+        if (audio.duration === audio.currentTime) {
+          $(audio).unbind('timeupdate');
+        }
+        if (wordIndex > currentTrack.timings.length - 1) return;
         if ((currentTrack.timings[wordIndex].start / 1000) <= audio.currentTime) {
           if ($lastWord) $lastWord.removeClass('active');
           $currentWord.addClass('active');

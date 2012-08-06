@@ -5,12 +5,14 @@
   var $motion = $('#motion');
   var $cover = $('#cover');
 
-  $body.delegate('#cover', 'mouseup touchend', function(e) {
-    $motion.add($body).attr('class', null).addClass('prologue');
+  $body.delegate('#cover', 'click', function(e) {
+    $motion.attr('class', null).addClass('prologue');
+    $body.attr('class', null).addClass('prologue');
   });
 
-  $body.delegate('#prologue', 'mouseup touchend', function(e) {
-    $motion.add($body).attr('class', null).addClass('songs');
+  $body.delegate('#prologue', 'click', function(e) {
+    $motion.attr('class', null).addClass('songs');
+    $body.attr('class', null).addClass('songs');
     setTimeout(function() {
       $('#T01_TooNice h1').click();
     }, 750);
