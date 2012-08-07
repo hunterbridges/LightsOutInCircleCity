@@ -46,11 +46,17 @@ h1, h2, h4 {
   top:0;
   left:0;
   background-color:black;
-  background-image: url('../img/cover.png');
+  background-image: url('../img/cover.jpg');
   background-size: cover;
   background-position: right center;
   height:100%;
   width:100%;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  #cover {
+    background-image: url('../img/cover_2x.jpg');
+  }
 }
 
 
