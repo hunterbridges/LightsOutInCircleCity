@@ -6,6 +6,7 @@
   var $cover = $('#cover');
 
   $body.delegate('#cover', 'click', function(e) {
+    if (!$cover.hasClass('can_continue')) return;
     $motion.attr('class', null).addClass('prologue');
     $body.attr('class', null).addClass('prologue');
   });
@@ -16,5 +17,10 @@
     setTimeout(function() {
       $('#T01_TooNice h1').click();
     }, 750);
+  });
+
+  $(window).bind('seekedTo.bc', function(e) {
+    $motion.attr('class', null).addClass('songs');
+    $body.attr('class', null).addClass('songs');
   });
 }(jQuery));

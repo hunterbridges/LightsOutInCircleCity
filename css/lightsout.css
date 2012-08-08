@@ -3,30 +3,21 @@ html, body {
   margin:0;
   color:white;
   background-color: #fff;
-  /*-webkit-transition:background-color 0.75s ease-in-out;*/
 }
 
 body {
   background-color:white;
 }
 
-body.prologue {
-  background-color:#333;
-}
-
-body.songs {
-  background-color:#CC0033;
-}
-
 h1, h2, h4 {
-  font-family:"report-school", Helvetica, sans-serif;
+  font-family:"futura-pt", "Helvetica", sans-serif;
+  font-weight:700;
 }
 
 #motion {
   position:fixed;
   top:0;
   left:0;
-  /*-webkit-transition:-webkit-transform 0.75s cubic-bezier(0, 0, .06, 1);*/
   -webkit-transition: -webkit-transform 750ms;
   -webkit-transform: translate3d(0px, 0px, 0px);
   height:100%;
@@ -53,12 +44,19 @@ h1, h2, h4 {
   width:100%;
 }
 
+#cover.can_continue {
+  cursor:pointer;
+}
+
+#cover.can_continue p {
+  opacity: 1;
+}
+
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   #cover {
     background-image: url('../img/cover_2x.jpg');
   }
 }
-
 
 #cover h1 {
   position:absolute;
@@ -70,6 +68,7 @@ h1, h2, h4 {
   text-shadow:1px -1px 0px rgba(127,127,127,0.5);
   text-align:right;
   color:black;
+  font-weight:300;
 }
 
 #cover h2 {
@@ -82,6 +81,19 @@ h1, h2, h4 {
   color:#d5e2e6;
   text-shadow:1px 1px 0px #9d8f99;
   text-align:right;
+  font-weight:300;
+}
+
+#cover p {
+  position:absolute;
+  font-family: minion-pro, sans-serif;
+  margin:0;
+  bottom:26px;
+  left:20px;
+  font-style:italic;
+  font-size:16px;
+  opacity:0;
+  -webkit-transition:opacity 1s;
 }
 
 #prologue {
@@ -98,6 +110,7 @@ h1, h2, h4 {
   -webkit-column-gap: 20px;
   column-count: 3;
   column-gap: 20px;
+  background-color:#333;
 }
 
 #prologue h2 {
@@ -126,6 +139,7 @@ h1, h2, h4 {
   left:0;
   height:100%;
   width:100%;
+  background-color:#CC0033;
 }
 
 span.word {
@@ -158,4 +172,12 @@ div.break {
 ul#songs {
   list-style:none;
   margin:0;
+}
+
+#menu {
+  position:fixed;
+  top:0;
+  right:0;
+  padding:10px;
+  z-index:2;
 }
