@@ -5,7 +5,7 @@ var BCAlbumController = function(opts) {
   this.hasAudio = false;
   this.$current = null;
 
-  this.rewindThreshold = 5000;
+  this.rewindThreshold = 3000;
 
   this.pullAudio();
 };
@@ -93,7 +93,7 @@ BCAlbumController.prototype.prev = function() {
   var curIndex = $audios.index(this.$current);
   var $prev = $audios.eq(curIndex - 1);
 
-  if (this.$current.get(0).currentTime < this.rewindThreshold && $prev.length) {
+  if (this.$current.get(0).currentTime * 1000 < this.rewindThreshold && $prev.length) {
     if (curIndex === 0) return this.stop();
     this.seekTo($prev);
   } else {

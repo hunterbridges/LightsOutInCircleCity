@@ -140,6 +140,29 @@ h1, h2, h4 {
   height:100%;
   width:100%;
   background-color:#CC0033;
+  -webkit-transition:background-color 1s;
+  -moz-transition:background-color 1s;
+  transition:background-color 1s;
+}
+
+#song_container.T02_AmenitiesExtremities {
+  background-color:#0099FF;
+}
+
+#song_container.T03_BluntTrauma {
+  background-color:#006633;
+}
+
+#song_container.T04_CircleCity {
+  background-color:#330099;
+}
+
+#song_container.T05_Fusebox {
+  background-color:#222;
+}
+
+#song_container.T06_WanderingAndWondering {
+  background-color:#CC9933;
 }
 
 #songs {

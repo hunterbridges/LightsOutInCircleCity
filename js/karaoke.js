@@ -134,6 +134,7 @@
     var trackIndex = $('audio').index($audio);
     $currentTrack = $('#songs li').eq(trackIndex);
     var trackSlug = $currentTrack.attr('id').replace('T', '');
+    $('#song_container').attr('class', null).addClass($currentTrack.attr('id'));
 
     currentTrack = lyrics[trackSlug];
     currentTrackIndex = trackIndex;
@@ -179,7 +180,7 @@
     var fromTop = $currentWord.position().top;
     var normalizedY = ($container.data('transforms') || {}).translateY || 0;
     fromTop += normalizedY;
-    var threshold = 200;
+    var threshold = 100;
     if (fromTop !== threshold) {
       var newTranslate = Math.min(0, normalizedY - (fromTop - threshold));
       $container.css('translateY', newTranslate);
