@@ -27,7 +27,7 @@ BCAlbumController.prototype.pullAudio = function() {
         $('body').append(
           '<audio data-title="'+tracks[i].title+'" src="'+src+'"></audio>'
         );
-        $('audio').bind('timeupdate', function(e) {
+        $('audio:last').bind('timeupdate', function(e) {
           var audio = $(e.currentTarget).get(0);
           if (audio.duration === audio.currentTime) {
             controller.next();

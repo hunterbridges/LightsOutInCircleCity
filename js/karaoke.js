@@ -141,9 +141,13 @@
     while (currentTrack.timings[wordIndex].start <= currentMs) wordIndex++;
 
     $currentWord = song$words[trackIndex].eq(wordIndex);
-    if (currentTrack.timings[wordIndex].start <= currentMs)
-        $currentWord.addClass('active');
+    if (currentTrack.timings[wordIndex].start <= currentMs) {
+      $currentWord.addClass('active');
+      $(window).trigger('newLine.karaoke', $currentWord);
+    }
   });
+
+  var triggerLine = false;
 
   $(window).bind('timeupdate.bc', function(e, audio) {
     var $audio = $(audio);
@@ -154,9 +158,29 @@
       $currentWord = song$words[currentTrackIndex].eq(wordIndex);
       if ($lastWord) $lastWord.removeClass('active');
       $currentWord.addClass('active');
+      if (triggerLine) {
+        $(window).trigger('newLine.karaoke', $currentWord);
+        triggerLine = false;
+      }
       wordIndex++;
       $lastWord = $currentWord;
       $currentWord = song$words[currentTrackIndex].eq(wordIndex);
+      if (currentTrack.timings[wordIndex - 1].line) {
+        triggerLine = true;
+      }
+    }
+  });
+
+  var $container = $('ul#songs');
+
+  $(window).bind('newLine.karaoke', function(e, currentWord) {
+    var $currentWord = $(currentWord);
+    var currentMargin = $container.css('-webkit-transform');
+    var fromTop = $currentWord.position().top;
+    fromTop += ($container.data('transforms') || {}).translateY || 0;
+    var threshold = 300;
+    if (fromTop !== threshold) {
+      $container.css('translateY', '-='+(fromTop - threshold));
     }
   });
 

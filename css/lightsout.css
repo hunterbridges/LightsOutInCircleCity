@@ -133,13 +133,20 @@ h1, h2, h4 {
   margin:0 0 16px 0;
 }
 
-#songs {
+#song_container {
   position:absolute;
   top:200%;
   left:0;
   height:100%;
   width:100%;
   background-color:#CC0033;
+}
+
+#songs {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  -webkit-transition-duration: 200ms;
 }
 
 span.word {
