@@ -76,13 +76,16 @@
   var str = '';
   var words = [];
 
+  // Best var name
+  var song$words = [];
+
   var build = function() {
     $.each(trackOrder, function(i) {
       var track = trackOrder[i];
       var song = lyrics[track];
       var timings = song.timings;
+      var numWords = 0;
       $.each(timings, function(i) {
-        words.push(timings[i].word);
         str += '<span class="'+i+' word" data-start="'+timings[i].start+'">'+
             timings[i].word+'</span> ';
         if (timings[i].line) {
@@ -96,6 +99,7 @@
       });
       songs.push(stanzas);
       stanzas = [];
+      numWords++;
     });
 
     for (var i = 0; i < songs.length; i++) {
@@ -106,12 +110,13 @@
         line = stanza.join('<br>');
         $('li#T'+trackOrder[i]+'').append('<p>'+line+'</p>');
       }
+      song$words.push($('li#T'+trackOrder[i]+' .word'));
     }
   };
 
   var audio = null;
   var currentTrack = null;
-  var trackClicked = null;
+  var currentTrackIndex = null;
   var $currentTrack = null;
   var $currentWord = null;
   var $lastWord = null;
@@ -131,10 +136,11 @@
     var trackSlug = $currentTrack.attr('id').replace('T', '');
 
     currentTrack = lyrics[trackSlug];
+    currentTrackIndex = trackIndex;
 
     while (currentTrack.timings[wordIndex].start <= currentMs) wordIndex++;
 
-    $currentWord = $currentTrack.find('span.'+(wordIndex)+'');
+    $currentWord = song$words[trackIndex].eq(wordIndex);
     if (currentTrack.timings[wordIndex].start <= currentMs)
         $currentWord.addClass('active');
   });
@@ -145,12 +151,12 @@
 
     var currentMs = audio.currentTime * 1000;
     if (currentTrack.timings[wordIndex].start <= currentMs) {
-      $currentWord = $currentTrack.find('span.'+(wordIndex)+'');
+      $currentWord = song$words[currentTrackIndex].eq(wordIndex);
       if ($lastWord) $lastWord.removeClass('active');
       $currentWord.addClass('active');
       wordIndex++;
       $lastWord = $currentWord;
-      $currentWord = $currentTrack.find('span.'+(wordIndex)+'');
+      $currentWord = song$words[currentTrackIndex].eq(wordIndex);
     }
   });
 
