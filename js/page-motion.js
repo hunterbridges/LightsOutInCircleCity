@@ -11,16 +11,29 @@
     $body.attr('class', null).addClass('prologue');
   });
 
-  $body.delegate('#prologue', 'click', function(e) {
+  $body.delegate('#prologue .play', 'click', function(e) {
     $motion.attr('class', null).addClass('songs');
     $body.attr('class', null).addClass('songs');
     setTimeout(function() {
       $('#T01_TooNice h1').click();
     }, 750);
+    return false;
   });
 
   $(window).bind('seekedTo.bc', function(e) {
     $motion.attr('class', null).addClass('songs');
     $body.attr('class', null).addClass('songs');
+  });
+
+  $(window).bind('prevBeforeBeginning.bc', function(e) {
+    $motion.attr('class', null).addClass('prologue');
+    $body.attr('class', null).addClass('prologue');
+  });
+
+  $body.delegate('#prologue h2', 'click', function(e) {
+    $motion.attr('class', null);
+    $body.attr('class', null);
+    e.preventDefault();
+    e.stopPropogation();
   });
 }(jQuery));

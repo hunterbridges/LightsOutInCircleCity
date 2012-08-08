@@ -25,7 +25,7 @@ BCAlbumController.prototype.pullAudio = function() {
       $.each(tracks, function(i) {
         var src = tracks[i].streaming_url;
         $('body').append(
-          '<audio data-title="'+tracks[i].title+'" src="'+src+'"></audio>'
+          '<audio data-title="'+tracks[i].title+'" preload="auto" src="'+src+'"></audio>'
         );
         $('audio:last').bind('timeupdate', function(e) {
           var audio = $(e.currentTarget).get(0);
@@ -34,8 +34,8 @@ BCAlbumController.prototype.pullAudio = function() {
           }
           $(window).trigger('timeupdate.bc', audio);
         });
-        $(window).trigger('gotAudio.bc');
       });
+      $(window).trigger('gotAudio.bc');
     }
   });
 };
@@ -81,6 +81,7 @@ BCAlbumController.prototype.next = function() {
   var curIndex = $audios.index(this.$current);
   var $next = $audios.eq(curIndex + 1);
   if ($next.length) return this.seekTo($next);
+  else $(window).trigger('nextAfterEnd.bc');
 
   this.stop();
 };
@@ -94,7 +95,11 @@ BCAlbumController.prototype.prev = function() {
   var $prev = $audios.eq(curIndex - 1);
 
   if (this.$current.get(0).currentTime * 1000 < this.rewindThreshold && $prev.length) {
-    if (curIndex === 0) return this.stop();
+    if (curIndex === 0) {
+      $(window).trigger('prevBeforeBeginning.bc');
+      this.stop();
+      return;
+    }
     this.seekTo($prev);
   } else {
     this.$current.get(0).currentTime = 0;
@@ -120,5 +125,5 @@ BCAlbumController.prototype.seekTo = function($seek, offset) {
     current.currentTime = offset;
   }
 
-  $(window).trigger('seekedTo.bc', $seek);
+  $(window).trigger('seekedTo.bc', $seek, offset);
 };

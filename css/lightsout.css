@@ -92,7 +92,7 @@ h1, h2, h4 {
   left:20px;
   font-style:italic;
   font-size:16px;
-  opacity:0;
+  opacity:0.3;
   -webkit-transition:opacity 1s;
 }
 
@@ -102,21 +102,71 @@ h1, h2, h4 {
   left:0;
   height:100%;
   width:100%;
+  background-color:#333;
+}
+
+#note_shift {
+  position:absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+}
+
+#liner_notes {
+  position:absolute;
+  top:0;
+  left:0;
+  height:100%;
   box-sizing:border-box;
-  padding:20px;
+  padding:20px 20px 120px 20px;
   -moz-column-count: 3;
   -moz-column-gap: 20px;
   -webkit-column-count: 3;
   -webkit-column-gap: 20px;
   column-count: 3;
   column-gap: 20px;
-  background-color:#333;
 }
+
+#liner_notes .avoid {
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  column-break-inside: avoid;
+}
+
+#prologue_controls {
+  position:absolute;
+  left:0;
+  bottom:0;
+  height:100px;
+  width:100%;
+  text-align:center;
+}
+
+#prologue_controls a.play {
+  display:inline-block;
+  font-size:60px;
+  background-color:white;
+  color:#333;
+  border-radius:40px;
+  padding: 6px 8px 0px 18px;
+  margin-bottom:20px;
+  -webkit-transition:background-color 500ms;
+  -moz-transition:background-color 500ms;
+  transition:background-color 500ms;
+  text-decoration:none;
+}
+
+#prologue_controls a.play:hover {
+  background-color:#ccc;
+}
+
 
 #prologue h2 {
   padding:0;
   margin:0;
   font-size:24px;
+  cursor:pointer;
 }
 
 #prologue h3 {
@@ -204,10 +254,107 @@ ul#songs {
   margin:0;
 }
 
-#menu {
-  position:fixed;
-  top:0;
-  right:0;
+#song_container #menu {
+  position:absolute;
+  top:20px;
+  right:20px;
   padding:10px;
   z-index:2;
+  width:200px;
+  text-align:right;
+  font-family:minion-pro, serif;
+}
+
+#song_container #menu .media_controls a {
+  display:inline-block;
+  text-decoration:none;
+  color:white;
+  height:20px;
+  margin-left:20px;
+}
+
+#song_container #menu .media_controls a:hover {
+  opacity:0.7;
+}
+
+#menu #prev {
+  border-left:4px solid white;
+  padding-left:1px;
+}
+
+#menu #prev div {
+  width:0;
+  height:0;
+  border-top:10px solid transparent;
+  border-bottom:10px solid transparent;
+  border-right:10px solid white;
+}
+
+#menu #pp .pause {
+  width:4px;
+  border-left:6px solid white;
+  border-right:6px solid white;
+  height:20px;
+}
+
+#menu #pp .play {
+  width:0;
+  height:0;
+  border-top:10px solid transparent;
+  border-bottom:10px solid transparent;
+  border-left:10px solid white;
+}
+
+#menu #next {
+  border-right:4px solid white;
+  padding-right:1px;
+}
+
+#menu #next div {
+  width:0;
+  height:0;
+  border-top:10px solid transparent;
+  border-bottom:10px solid transparent;
+  border-left:10px solid white;
+}
+
+#menu #pp.play .pause {
+  display:none;
+}
+
+#menu #pp.pause .play {
+  display:none;
+}
+
+#song_container #menu .media_controls a#more_menu {
+  position:relative;
+  border:1px solid white;
+  border-radius:3px;
+  height:23px;
+  width:24px;
+  box-sizing:border-box;
+  margin-bottom:-2px;
+}
+
+#menu #more_menu div {
+  position:absolute;
+  width:16px;
+  height:3px;
+  border-radius:1px;
+  background-color:white;
+}
+
+#menu #more_menu .top {
+  top:3px;
+  left:3px;
+}
+
+#menu #more_menu .mid {
+  top:9px;
+  left:3px;
+}
+
+#menu #more_menu .bot {
+  bottom:3px;
+  left:3px;
 }

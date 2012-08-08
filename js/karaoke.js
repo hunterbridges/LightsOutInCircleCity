@@ -42,15 +42,25 @@
   });
 
   $(window).bind('paused.bc', function() {
-    $('#menu #pp').html('Play');
+    $('#menu #pp').attr('class', 'play');
   });
 
   $(window).bind('playing.bc', function() {
-    $('#menu #pp').html('Pause');
+    $('#menu #pp').attr('class', 'pause');
   });
 
   $(window).bind('gotAudio.bc', function() {
-    $('#cover').addClass('can_continue');
+    var needsLoad = $('audio').length;
+    var hasLoaded = 0;
+    $('audio').bind('canplaythrough', function() {
+      hasLoaded++;
+      $('#cover p').html('Loaded ' + hasLoaded + ' of 6 songs&hellip;');
+      if (hasLoaded === needsLoad) {
+        build();
+        $('#cover').addClass('can_continue');
+        $('#cover p').html('Click to continue&hellip;');
+      }
+    });
   });
 
   $('#songs').delegate('h1', 'click', function(e) {
@@ -122,7 +132,7 @@
   var $lastWord = null;
 
   var wordIndex = 0;
-  $(window).bind('seekedTo.bc', function(e, $audio) {
+  $(window).bind('seekedTo.bc', function(e, $audio, offset) {
     if ($currentWord) $currentWord.removeClass('active');
     if ($lastWord) $lastWord.removeClass('active');
     $currentWord = null;
@@ -139,17 +149,16 @@
     currentTrack = lyrics[trackSlug];
     currentTrackIndex = trackIndex;
 
-    while (currentTrack.timings[wordIndex].start <= currentMs) wordIndex++;
+    while (currentTrack.timings[wordIndex].start <= currentMs) {
+      wordIndex++;
+    }
 
     $currentWord = song$words[trackIndex].eq(wordIndex);
     $(window).trigger('newLine.karaoke', $currentWord);
-    if (currentTrack.timings[wordIndex].start <= currentMs) {
-      $currentWord.addClass('active');
-    }
+    $(audio).trigger('timeupdate');
   });
 
   var triggerLine = false;
-
   $(window).bind('timeupdate.bc', function(e, audio) {
     var $audio = $(audio);
     if (wordIndex > currentTrack.timings.length - 1) return;
@@ -173,7 +182,6 @@
   });
 
   var $container = $('ul#songs');
-
   $(window).bind('newLine.karaoke', function(e, currentWord) {
     var $currentWord = $(currentWord);
     var currentMargin = $container.css('-webkit-transform');
@@ -186,6 +194,4 @@
       $container.css('translateY', newTranslate);
     }
   });
-
-  build();
 }());
