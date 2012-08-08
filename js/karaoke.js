@@ -141,9 +141,9 @@
     while (currentTrack.timings[wordIndex].start <= currentMs) wordIndex++;
 
     $currentWord = song$words[trackIndex].eq(wordIndex);
+    $(window).trigger('newLine.karaoke', $currentWord);
     if (currentTrack.timings[wordIndex].start <= currentMs) {
       $currentWord.addClass('active');
-      $(window).trigger('newLine.karaoke', $currentWord);
     }
   });
 
@@ -177,10 +177,12 @@
     var $currentWord = $(currentWord);
     var currentMargin = $container.css('-webkit-transform');
     var fromTop = $currentWord.position().top;
-    fromTop += ($container.data('transforms') || {}).translateY || 0;
-    var threshold = 300;
+    var normalizedY = ($container.data('transforms') || {}).translateY || 0;
+    fromTop += normalizedY;
+    var threshold = 200;
     if (fromTop !== threshold) {
-      $container.css('translateY', '-='+(fromTop - threshold));
+      var newTranslate = Math.min(0, normalizedY - (fromTop - threshold));
+      $container.css('translateY', newTranslate);
     }
   });
 
