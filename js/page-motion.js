@@ -20,6 +20,15 @@
     return false;
   });
 
+  $body.delegate('#epilogue .replay', 'click', function(e) {
+    $motion.attr('class', null).addClass('songs');
+    $body.attr('class', null).addClass('songs');
+    setTimeout(function() {
+      $('#T01_TooNice h1').click();
+    }, 750);
+    return false;
+  });
+
   $(window).bind('seekedTo.bc', function(e) {
     $motion.attr('class', null).addClass('songs');
     $body.attr('class', null).addClass('songs');

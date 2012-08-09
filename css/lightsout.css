@@ -17,12 +17,12 @@ h1, h2, h4 {
 a, a:visited {
   color: white;
   text-decoration: none;
-  -webkit-transition:color 500ms;
+  -webkit-transition:opacity 500ms;
   font-weight:bold;
 }
 
 a:hover {
-  color:#ccc;
+  opacity:0.5;
 }
 
 #motion {
@@ -398,6 +398,26 @@ ul#songs {
   left:3px;
 }
 
+#menu #more_menu.open {
+  opacity:0.45;
+}
+
+#menu a#more_menu.open:hover {
+  opacity:0.55;
+}
+
+#menu #extended_menu.hidden {
+  opacity:0;
+  -webkit-transform: translateX(10px);
+  cursor:default !important;
+}
+
+#menu #extended_menu {
+  opacity:1;
+  -webkit-transition: all 300ms;
+  -webkit-transform: translateX(0px);
+}
+
 iframe.twitter-follow-button {
   position:relative;
   top:4px;
@@ -414,13 +434,45 @@ iframe.twitter-follow-button {
 
 #epilogue .fin {
   position:absolute;
-  top:50%;
+  bottom:50%;
   left:0;
   font-size:100px;
   line-height:100px;
-  margin-top:-50px;
   text-align:center;
   font-family:minion-pro, serif;
   font-style:italic;
   width:100%;
+}
+
+#epilogue .enjoy {
+  position:absolute;
+  top:50%;
+  left:0;
+  width:100%;
+  text-align:center;
+  line-height:20px;
+  margin-top:20px;
+  font-style:italic;
+}
+
+#epilogue .extras {
+  position:absolute;
+  top:50%;
+  right:50%;
+  margin-right:10px;
+  margin-top:50px;
+  text-align:right;
+}
+
+#epilogue .extras p {
+  line-height:1.45em;
+}
+
+#epilogue .social {
+  position:absolute;
+  top:50%;
+  left:50%;
+  margin-left:10px;
+  margin-top:50px;
+  text-align:left;
 }

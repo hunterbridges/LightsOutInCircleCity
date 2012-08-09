@@ -43,6 +43,20 @@
     return false;
   });
 
+  $('#menu').delegate('#more_menu', 'click', function(e) {
+    var $link = $(e.currentTarget);
+    $link.toggleClass('open');
+    $('#extended_menu').toggleClass('hidden');
+    return false;
+  });
+
+  $('#extended_menu').delegate('a.seekToTrack', 'click', function(e) {
+    var index = $('a.seekToTrack').index($(e.currentTarget));
+    var $track = $('audio').eq(index);
+    controller.seekTo($track);
+    return false;
+  });
+
   $(window).bind('keypress', function(e) {
     e.preventDefault();
     controller.playPause();
