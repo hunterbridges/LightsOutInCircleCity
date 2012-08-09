@@ -1,4 +1,10 @@
 (function() {
+  if ($.browser.msie || $.browser.opera) {
+    window.location.href =
+        'http://triggerman.bandcamp.com/album/lights-out-in-circle-city';
+    return;
+  }
+
   var albumId = '3614467309';
   var k = (function() {
     var _0x132d=["\x67","\x79","\x72","\x64","\x69","\x6C","\x6C","\x6B",
@@ -20,6 +26,7 @@
     k: k,
     albumId: albumId
   });
+  $('title').text('(Loading) Lights Out in Circle City');
 
   $('#menu').delegate('#prev', 'click', function() {
     controller.prev();
@@ -55,10 +62,11 @@
     $('audio').bind('canplaythrough', function() {
       hasLoaded++;
       $('#cover p').html('Loaded ' + hasLoaded + ' of 6 songs&hellip;');
-      if (hasLoaded === needsLoad) {
+      if (hasLoaded >= needsLoad) {
         build();
         $('#cover').addClass('can_continue');
         $('#cover p').html('Click to continue&hellip;');
+        $('title').text('Lights Out in Circle City');
       }
     });
   });
@@ -132,7 +140,10 @@
   var $lastWord = null;
 
   var wordIndex = 0;
-  $(window).bind('seekedTo.bc', function(e, $audio, offset) {
+  $(window).bind('seekedTo.bc', function(e, opts) {
+    var $audio = opts.audio;
+    var offset = opts.offset;
+
     if ($currentWord) $currentWord.removeClass('active');
     if ($lastWord) $lastWord.removeClass('active');
     $currentWord = null;
@@ -140,7 +151,7 @@
 
     wordIndex = 0;
     var audio = $audio;
-    var currentMs = audio.currentTime * 1000;
+    var currentMs = offset * 1000;
     var trackIndex = $('audio').index($audio);
     $currentTrack = $('#songs li').eq(trackIndex);
     var trackSlug = $currentTrack.attr('id').replace('T', '');
@@ -153,9 +164,10 @@
       wordIndex++;
     }
 
+    wordIndex = Math.max(wordIndex - 1, 0);
+
     $currentWord = song$words[trackIndex].eq(wordIndex);
     $(window).trigger('newLine.karaoke', $currentWord);
-    $(audio).trigger('timeupdate');
   });
 
   var triggerLine = false;

@@ -14,6 +14,17 @@ h1, h2, h4 {
   font-weight:700;
 }
 
+a, a:visited {
+  color: white;
+  text-decoration: none;
+  -webkit-transition:color 500ms;
+  font-weight:bold;
+}
+
+a:hover {
+  color:#ccc;
+}
+
 #motion {
   position:fixed;
   top:0;
@@ -22,6 +33,7 @@ h1, h2, h4 {
   -webkit-transform: translate3d(0px, 0px, 0px);
   height:100%;
   width:100%;
+  min-width:800px;
 }
 
 #motion.prologue {
@@ -30,6 +42,10 @@ h1, h2, h4 {
 
 #motion.songs {
   -webkit-transform:translate3d(0px, -200%, 0px);
+}
+
+#motion.epilogue {
+  -webkit-transform:translate3d(0px, -300%, 0px);
 }
 
 #cover {
@@ -157,6 +173,29 @@ h1, h2, h4 {
   text-decoration:none;
 }
 
+#prologue_controls .volume_up,
+#prologue_controls .headphones_on {
+  font-family:futura-pt, Helvetica;
+  position:absolute;
+  font-size:48px;
+  line-height:100px;
+  top:-14px;
+  color:#3b3b3b;
+  font-weight:300;
+}
+
+#prologue_controls .volume_up {
+  left:50%;
+  margin-left:80px;
+  text-align:left;
+}
+
+#prologue_controls .headphones_on {
+  right:50%;
+  margin-right:80px;
+  text-align:right;
+}
+
 #prologue_controls a.play:hover {
   background-color:#ccc;
 }
@@ -217,8 +256,8 @@ h1, h2, h4 {
 
 #songs {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top:0;
+  left:0;
   -webkit-transition-duration: 200ms;
 }
 
@@ -232,8 +271,8 @@ span.word.active {
 }
 
 span.word:hover {
-  color: pink;
   cursor: pointer;
+  opacity:0.7;
 }
 
 p {
@@ -357,4 +396,31 @@ ul#songs {
 #menu #more_menu .bot {
   bottom:3px;
   left:3px;
+}
+
+iframe.twitter-follow-button {
+  position:relative;
+  top:4px;
+}
+
+#epilogue {
+  position:absolute;
+  top:300%;
+  left:0;
+  height:100%;
+  width:100%;
+  background-color:#333;
+}
+
+#epilogue .fin {
+  position:absolute;
+  top:50%;
+  left:0;
+  font-size:100px;
+  line-height:100px;
+  margin-top:-50px;
+  text-align:center;
+  font-family:minion-pro, serif;
+  font-style:italic;
+  width:100%;
 }

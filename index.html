@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en-US">
+  <head profile="http://www.w3.org/2005/10/profile">
     <meta charset="UTF-8">
-    <title>Trigger Man – Lights Out in Circle City</title>
+    <title>Lights Out in Circle City</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript" src="//use.typekit.net/sqy2kui.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <link rel="stylesheet" type="text/css" href="css/lightsout.css" />
+    <link rel="icon" type="image/png" href="img/favicon.png">
   </head>
   <body>
-    <div id="motion">
+    <div id="motion" class="epilogue">
       <div id="cover">
         <h1>Trigger Man</h1>
         <h2>Lights Out in Circle City</h2>
@@ -106,28 +107,56 @@
               We sincerely hope you enjoy this presentation.
             </p>
             <div class="break">&#x301c;</div>
-            <div class="avoid">
+            <div class="avoid" id="credits">
               <h4>Credits</h4>
               <p>
                 <i>Trigger Man is:</i><br />
+                <a href="https://twitter.com/HunterBridges"
+                   class="twitter-follow-button"
+                   data-show-count="false"
+                   data-show-screen-name="false">Follow @HunterBridges</a>
                 Hunter Bridges – Guitar, Vocals<br />
+                <a href="https://twitter.com/pfeifdigs"
+                   class="twitter-follow-button"
+                   data-show-count="false"
+                   data-show-screen-name="false">Follow @pfeifdigs</a>
                 Alan Pfeifer – Drums<br />
+                <a href="https://twitter.com/ianeicher"
+                   class="twitter-follow-button"
+                   data-show-count="false"
+                   data-show-screen-name="false">Follow @ianeicher</a>
                 Ian Eicher – Bass
               </p>
               <p>
                 <i>Album Credits:</i><br />
-                Art by Jesse Benjamin<br />
-                Digital Release developed by Mike Kavouras &amp; Hunter Bridges
+                <a href="https://twitter.com/theholbrooklyn"
+                   class="twitter-follow-button"
+                   data-show-count="false"
+                   data-show-screen-name="false">Follow @theholbrooklyn</a>
+                Jesse Benjamin – Album Art<br />
+                <a href="https://twitter.com/mikekavouras"
+                   class="twitter-follow-button"
+                   data-show-count="false"
+                   data-show-screen-name="false">Follow @mikekavouras</a>
+                Mike Kavouras – Software Engineer
               </p>
               <p>
                 <i>Special Thanks:</i><br />
                 Judy Yoder, Mike Viviani, John Poisson, Matt White, Jim Menard
               </p>
+              <p>
+                <i>Powered By:</i><br />
+                <a href="http://github.com/lightsoutincirclecity/lightsoutincirclecity.github.com/" target="_blank">Github</a>,
+                <a href="http://triggerman.bandcamp.com/album/lights-out-in-circle-city" target="_blank">Bandcamp</a>,
+                <a href="http://www.jquery.com/" target="_blank">jQuery</a>
+              </p>
             </div>
           </div>
         </div>
         <div id="prologue_controls">
+          <div class="volume_up">Volume Up</div>
           <a class="play" href="#">&#9654;</a>
+          <div class="headphones_on">Speakers On</div>
         </div>
       </div>
       <div id="song_container">
@@ -162,11 +191,47 @@
           </div>
         </div>
       </div>
+      <div id="epilogue">
+        <div class="fin">
+          fin
+        </div>
+        <div class="extras">
+          <p>Enjoy the album? Show your support!</p>
+          <p>
+            <a href="http://triggerman.bandcamp.com/album/lights-out-in-circle-city">
+              Purchase and download for $4 on Bandcamp
+            </a><br />
+            <a href="http://www.github.com/lightsoutincirclecity/lightsoutincirclecity.github.com">
+              Check out the source code on Github
+            </a><br />
+            <a href="#" class="replay">
+              Play it again
+            </a>
+          </p>
+          <p>
+            <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+          </p>
+        </div>
+      </div>
     </div>
     <script src="js/data.js"></script>
     <script src="js/bc-album-controller.js"></script>
     <script src="js/page-motion.js"></script>
     <script src="js/karaoke.js"></script>
     <script src="js/transformjs.min.js"></script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-33861561-2']);
+      _gaq.push(['_setDomainName', 'lightsoutincirclecity.com']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
   </body>
 </html>

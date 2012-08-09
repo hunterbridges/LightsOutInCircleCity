@@ -125,5 +125,7 @@ BCAlbumController.prototype.seekTo = function($seek, offset) {
     current.currentTime = offset;
   }
 
-  $(window).trigger('seekedTo.bc', $seek, offset);
+  offset = offset || 0;
+
+  $(window).trigger('seekedTo.bc', {audio: $seek, offset: offset});
 };
