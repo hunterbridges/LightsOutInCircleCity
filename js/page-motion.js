@@ -6,7 +6,7 @@
   var $cover = $('#cover');
 
   $body.delegate('#cover', 'click', function(e) {
-    //if (!$cover.hasClass('can_continue')) return;
+    if (!$cover.hasClass('can_continue')) return;
     $motion.attr('class', null).addClass('prologue');
     $body.attr('class', null).addClass('prologue');
   });
