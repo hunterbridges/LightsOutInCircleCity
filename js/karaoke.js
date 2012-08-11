@@ -58,12 +58,16 @@
   });
 
   $(window).bind('keypress', function(e) {
+    if (e.keyCode !== 32) return;
     e.preventDefault();
     controller.playPause();
   });
 
+  var pendingStep;
   $(window).bind('paused.bc', function() {
     $('#menu #pp').attr('class', 'play');
+    clearTimeout(pendingStep);
+    pendingStep = null;
   });
 
   $(window).bind('playing.bc', function() {
@@ -153,6 +157,26 @@
   var $currentWord = null;
   var $lastWord = null;
 
+  var triggerLine = false;
+  var stepWord = function(desiredWordIndex, offset, wordStart) {
+    $currentWord = song$words[currentTrackIndex].eq(wordIndex);
+    if ($lastWord) $lastWord.removeClass('active');
+    if (triggerLine) {
+      $(window).trigger('newLine.karaoke', $currentWord);
+      triggerLine = false;
+    }
+    var delta = Math.round(wordStart - offset);
+    if (delta > 10) return;
+
+    $currentWord.addClass('active');
+    wordIndex++;
+    $lastWord = $currentWord;
+    $currentWord = song$words[currentTrackIndex].eq(wordIndex);
+    if (currentTrack.timings[wordIndex - 1].line) {
+      triggerLine = true;
+    }
+  };
+
   var wordIndex = 0;
   $(window).bind('seekedTo.bc', function(e, opts) {
     var $audio = opts.audio;
@@ -162,6 +186,9 @@
     if ($lastWord) $lastWord.removeClass('active');
     $currentWord = null;
     $lastWord = null;
+
+    clearTimeout(pendingStep);
+    pendingStep = null;
 
     wordIndex = 0;
     var audio = $audio;
@@ -181,29 +208,24 @@
     wordIndex = Math.max(wordIndex - 1, 0);
 
     $currentWord = song$words[trackIndex].eq(wordIndex);
-    $(window).trigger('newLine.karaoke', $currentWord);
+    triggerLine = true;
+    stepWord(wordIndex, currentMs, currentTrack.timings[wordIndex].start);
   });
 
-  var triggerLine = false;
   $(window).bind('timeupdate.bc', function(e, audio) {
     var $audio = $(audio);
+    if (!currentTrack) return;
     if (wordIndex > currentTrack.timings.length - 1) return;
-
     var currentMs = audio.currentTime * 1000;
-    if (currentTrack.timings[wordIndex].start <= currentMs) {
-      $currentWord = song$words[currentTrackIndex].eq(wordIndex);
-      if ($lastWord) $lastWord.removeClass('active');
-      $currentWord.addClass('active');
-      if (triggerLine) {
-        $(window).trigger('newLine.karaoke', $currentWord);
-        triggerLine = false;
-      }
-      wordIndex++;
-      $lastWord = $currentWord;
-      $currentWord = song$words[currentTrackIndex].eq(wordIndex);
-      if (currentTrack.timings[wordIndex - 1].line) {
-        triggerLine = true;
-      }
+    var nextWordStart = currentTrack.timings[wordIndex].start;
+    var delta = Math.round(nextWordStart - currentMs);
+    if (nextWordStart <= currentMs) {
+      clearTimeout(pendingStep);
+      pendingStep = null;
+      stepWord(wordIndex, currentMs, nextWordStart);
+    } else if (nextWordStart > currentMs && delta < 250) {
+      clearTimeout(pendingStep);
+      pendingStep = setTimeout(function() { stepWord(wordIndex, currentMs + delta, nextWordStart); }, delta);
     }
   });
 

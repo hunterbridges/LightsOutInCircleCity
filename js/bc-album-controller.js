@@ -1,6 +1,7 @@
 var BCAlbumController = function(opts) {
   this.k = opts.k;
   this.albumId = opts.albumId;
+  this.local = opts.local;
 
   this.hasAudio = false;
   this.$current = null;
@@ -15,6 +16,37 @@ BCAlbumController.prototype.pullAudio = function() {
   var url = 'http://api.bandcamp.com/api/album/2/info?key=' + this.k +
       '&album_id=' + this.albumId + '&callback=?';
 
+  if (this.local) {
+    setTimeout(function() {
+      controller.hasAudio = true;
+      var tracks = [
+        {title: "Too Nice", slug: "01_TooNice"},
+        {title: "Amenities, Extremities", slug: "02_AmenitiesExtremities"},
+        {title: "Blunt Trauma", slug: "03_BluntTrauma"},
+        {title: "Lights Out in Circle City", slug: "04_CircleCity"},
+        {title: "A Charge Out in the Fusebox", slug: "05_Fusebox"},
+        {title: "Wandering and Wondering", slug: "06_WanderingAndWondering"}
+      ];
+
+      $.each(tracks, function(i) {
+        var src = 'mp3/'+tracks[i].slug+'.mp3';
+        $('body').append(
+          '<audio data-title="'+tracks[i].title+'" preload="auto" src="'+src+'"></audio>'
+        );
+        $('audio:last').bind('timeupdate', function(e) {
+          var audio = e.currentTarget;
+          if (audio.duration === audio.currentTime) {
+            controller.next();
+          }
+          $(window).trigger('timeupdate.bc', audio);
+        });
+      });
+      $(window).trigger('gotAudio.bc');
+    }, 100);
+
+    return;
+  }
+
   $.ajax({
     url: url,
     type: 'GET',
@@ -28,7 +60,7 @@ BCAlbumController.prototype.pullAudio = function() {
           '<audio data-title="'+tracks[i].title+'" preload="auto" src="'+src+'"></audio>'
         );
         $('audio:last').bind('timeupdate', function(e) {
-          var audio = $(e.currentTarget).get(0);
+          var audio = e.currentTarget;
           if (audio.duration === audio.currentTime) {
             controller.next();
           }

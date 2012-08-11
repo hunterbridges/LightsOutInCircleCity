@@ -3,6 +3,7 @@ gem 'midilib'
 gem 'json'
 require 'midilib'
 require 'json'
+require 'yaml'
 
 meta = {
   '01_TooNice' => {
@@ -16,7 +17,7 @@ meta = {
     :tracknum => 2
   },
   '03_BluntTrauma' => {
-    :offset => 5085,
+    :offset => 0,
     :title => 'Blunt Trauma',
     :tracknum => 3
   },
@@ -61,6 +62,24 @@ meta.each do |song, data|
     end
   end
 
+  if song == '04_CircleCity'
+    # This is the only song with a tempo change...
+    # Hacking in support for it instead of a general solution
+    #
+    # So call me maybe?
+    change_measure = seq.get_measures[34]
+    old_bpm = seq.bpm
+    new_bpm = 165.5
+
+    start_clicks = change_measure.start.to_f - offset
+    when_change = (start_clicks / seq.ppqn.to_f / old_bpm) * 60.0 * 1000.0
+    timings[29..(timings.length-1)].each do |timing|
+      new = (timing[:start] - when_change) * old_bpm / new_bpm
+      new += when_change
+      timing[:start] = new
+    end
+  end
+
   # Read the lyrics
   file = File.open("#{song}.txt", "rb")
   contents = file.read
@@ -71,16 +90,33 @@ meta.each do |song, data|
 
   i = 0
   lyrics.each do |lyric|
-    stanza = /\r?\n\r?\n/
-    line = /\r?\n/
+    stanza = /\n\n/
+    line = /\n/
     if lyric =~ stanza
       # End of stanza
       split = lyric.split(stanza)
-      timings[i][:word] = split[0]
-      timings[i][:line] = true
-      timings[i][:end] = true
-      i += 1
-      timings[i][:word] = split[1]
+      split.map! do |s|
+        s.split(line)
+      end
+      split.flatten!
+
+      if (split.length == 2)
+        timings[i][:word] = split[0]
+        timings[i][:line] = true
+        timings[i][:end] = true
+        i += 1
+        timings[i][:word] = split[1]
+      elsif (split.length == 3)
+        # A cop out hack for the one case where this happens
+        timings[i][:word] = split[0]
+        timings[i][:line] = true
+        i += 1
+        timings[i][:word] = split[1]
+        timings[i][:line] = true
+        timings[i][:end] = true
+        i += 1
+        timings[i][:word] = split[2]
+      end
     elsif lyric =~ line
       # End of line
       split = lyric.split(line)
@@ -101,5 +137,9 @@ meta.each do |song, data|
   meta[song][:timings] = timings
 end
 
-File.open("lightsout.json", 'w') {|f| f.write(meta.to_json)}
-puts "Output >> lightsout.json"
+File.open("../js/data.js", 'w') do |f|
+  f.write('var lyrics = ');
+  f.write(meta.to_json)
+  f.write(';');
+end
+puts "Output >> ../js/data.js"

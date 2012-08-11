@@ -142,6 +142,7 @@ a:hover {
   -webkit-column-gap: 20px;
   column-count: 3;
   column-gap: 20px;
+  overflow:scroll;
 }
 
 #liner_notes .avoid {
@@ -257,8 +258,13 @@ a:hover {
 #songs {
   position: absolute;
   top:0;
-  left:0;
+  left:40px;
   -webkit-transition-duration: 200ms;
+  padding:0;
+}
+
+#songs li:first-child h1 {
+  margin-top:20px;
 }
 
 span.word {
@@ -297,11 +303,13 @@ ul#songs {
   position:absolute;
   top:20px;
   right:20px;
-  padding:10px;
   z-index:2;
-  width:200px;
+  width:280px;
   text-align:right;
   font-family:minion-pro, serif;
+}
+
+#song_container #menu .menu_buy {
 }
 
 #song_container #menu .media_controls a {
@@ -416,9 +424,10 @@ ul#songs {
   opacity:1;
   -webkit-transition: all 300ms;
   -webkit-transform: translateX(0px);
+  margin-top:10px;
 }
 
-iframe.twitter-follow-button {
+#prologue iframe.twitter-follow-button {
   position:relative;
   top:4px;
 }
@@ -475,4 +484,8 @@ iframe.twitter-follow-button {
   margin-left:10px;
   margin-top:50px;
   text-align:left;
+}
+
+#epilogue .buy {
+  color:yellow;
 }
